@@ -79,7 +79,7 @@ public class carpma : MonoBehaviour {
 				zıplamayönü = new Vector2 (-info.relativeVelocity.x+1, info.relativeVelocity.y+1);
 				}
 
-			rb.AddForce (zıplamayönü*4, ForceMode2D.Impulse);
+			rb.AddForce (zıplamayönü*20, ForceMode2D.Impulse);
 
 			particle.Play(); //kan damlama paticle
 		}

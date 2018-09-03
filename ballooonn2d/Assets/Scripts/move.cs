@@ -15,9 +15,7 @@ public class move : MonoBehaviour {
 	public bool dbaslılımı= false;
 	public Animator anim;
 
-
-
-	void Start ()
+    void Start ()
 
 	{
 		abasılımı = false;

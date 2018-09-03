@@ -31,6 +31,6 @@ Material:
     - _EnableExternalAlpha: 0
     - _InvFade: 1
     m_Colors:
-    - _Color: {r: 0.79982686, g: 0.14489621, b: 0.9852941, a: 1}
+    - _Color: {r: 0.9811321, g: 0.9811321, b: 0.9811321, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
