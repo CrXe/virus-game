@@ -9,6 +9,7 @@ public class carpma : MonoBehaviour {
 	private Vector2 zıplamayönü;
 	public ParticleSystem particle;
 	public GameObject particletransform;
+    public levelGm levelGm;
 
 
 	public float VirusPower;
@@ -87,15 +88,15 @@ public class carpma : MonoBehaviour {
 
 
 	void OnTriggerEnter2D (Collider2D info){
-		if (info.tag == "engel") {
+        if (info.tag == "engel")
+        {
 
-			engelcarpma eklenecekkütle = info.gameObject.GetComponent<engelcarpma> ();
-			HedefVirusPower += eklenecekkütle.engeltütle;
-		}	
+            engelcarpma eklenecekkütle = info.gameObject.GetComponent<engelcarpma>();
+            HedefVirusPower += eklenecekkütle.engeltütle;
+        }
 
-	
 
-		if (info.tag == "engeldusman" ) {
+        if (info.tag == "engeldusman" ) {
 
 			engelcarpma eklenecekkütle = info.gameObject.GetComponent<engelcarpma> ();
 			HedefVirusPower -= eklenecekkütle.engeltütle;

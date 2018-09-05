@@ -10,6 +10,7 @@ public class engelcarpma : MonoBehaviour {
 	public GameObject player;
 	public GameObject sprites;
 	public Animator animengelplus;
+   
 
 
 
@@ -26,18 +27,22 @@ public class engelcarpma : MonoBehaviour {
 	public Vector3 uzaklaşmamiktarı;
 	public ParticleSystem particleEnemy;
 
+    public SpawnerSpawner spawnerspawnersc;
 
 	void Start() {
 		yokolwithshield = false;
+        
 
 
-	
-		player = GameObject.FindWithTag("Player");
+
+        player = GameObject.FindWithTag("Player");
 
 	}
 
 	void Update () {
-		uzaklaşmamiktarı = trengel.transform.position - player.transform.position;
+
+       
+        uzaklaşmamiktarı = trengel.transform.position - player.transform.position;
 
 		if (trengel.lossyScale.x <= 0 ) {
 			tamamenyokol ();
@@ -90,9 +95,7 @@ public class engelcarpma : MonoBehaviour {
 
 
 
-
-
-	void OnTriggerEnter2D (Collider2D info )
+    void OnTriggerEnter2D (Collider2D info )
 	{
 		if (info.tag == "Player") {
 			
@@ -137,7 +140,10 @@ public class engelcarpma : MonoBehaviour {
 			bcengel.enabled = false;
 			yokol = true;
 		}
-	}
+
+      
+
+    }
 
 
 
