@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public class carpma : MonoBehaviour {
 
+
+    public SaveSc savesc;
 	public Rigidbody2D rb;
 	public Transform playertransform;
 	public Animator anim;
@@ -12,8 +14,8 @@ public class carpma : MonoBehaviour {
     public levelGm levelGm;
 
 
-	public float VirusPower;
-	public float HedefVirusPower;
+	public float virusHp;
+	public float hedefVirusHp;
 
 	public float tavanzemindmg;
 	public float immunesystemdmg;
@@ -22,12 +24,14 @@ public class carpma : MonoBehaviour {
 	public Image  PowerSlider;
 
 
-
-
-	void Start()
+    void Start()
 	{
-		VirusPower = 0;
-		HedefVirusPower = 80;
+     
+        virusHp = 0;
+        hedefVirusHp = savesc.maxHp;
+        tavanzemindmg = levelGm.tavanzemindmg;
+        immunesystemdmg = levelGm.tavanzemindmg;
+
 	}
 
 
@@ -36,10 +40,20 @@ public class carpma : MonoBehaviour {
 
 
 	{
-		if (VirusPower != HedefVirusPower) {
-			VirusPower = Mathf.LerpUnclamped (VirusPower , HedefVirusPower,5*(Time.deltaTime));
-			PowerSlider.fillAmount = VirusPower / 100;
+		if (virusHp != hedefVirusHp) {
+			virusHp = Mathf.LerpUnclamped (virusHp , hedefVirusHp,5*(Time.deltaTime));
+			PowerSlider.fillAmount = virusHp / 100;
+
+            
+ 
+           
 		}
+
+       if (hedefVirusHp<= 0)
+        {
+            levelGm.EndGame();
+
+        }
 
 
 
@@ -51,7 +65,7 @@ public class carpma : MonoBehaviour {
 	{
 		if (info.collider.tag == "immunesystem") {
 	
-			HedefVirusPower -=immunesystemdmg; 
+			hedefVirusHp -=immunesystemdmg; 
 			anim.SetBool ("dmgyedi", true); 
 
 			//Bugları önlemek için maximum zıplama vektörü 7*7
@@ -67,7 +81,7 @@ public class carpma : MonoBehaviour {
 		}
 		if (info.collider.tag == "tavanzemin"  ) {
 
-			HedefVirusPower -=tavanzemindmg;
+			hedefVirusHp -=tavanzemindmg;
 			anim.SetBool ("dmgyedi", true); 
 
 			//Bugları önlemek için maximum zıplama vektörü 7*7
@@ -92,14 +106,14 @@ public class carpma : MonoBehaviour {
         {
 
             engelcarpma eklenecekkütle = info.gameObject.GetComponent<engelcarpma>();
-            HedefVirusPower += eklenecekkütle.engeltütle;
+            savesc.protein += eklenecekkütle.engeltütle;
         }
 
 
         if (info.tag == "engeldusman" ) {
 
 			engelcarpma eklenecekkütle = info.gameObject.GetComponent<engelcarpma> ();
-			HedefVirusPower -= eklenecekkütle.engeltütle;
+			hedefVirusHp -= eklenecekkütle.engeltütle;
 
 		}
 		

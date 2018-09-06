@@ -9,7 +9,7 @@ public class SaveSc : MonoBehaviour {
 	public string Name="NONAME";
 	public int level;
 	//Mutasyon dataları for save
-	public int protein;
+	public float protein;
 	public int shieldpr;
 	public int magnetpr;
 	public int pusherpr;
@@ -18,6 +18,7 @@ public class SaveSc : MonoBehaviour {
 	public int movelvl2pr;
 	public int noenemypr;
 	public int takeallpr;
+    public int maxHp;
 
 	void Awake ()
 	{
@@ -28,12 +29,14 @@ public class SaveSc : MonoBehaviour {
 
 
 	//json kaydet komutu
-	void Save ()
+	public void Save ()
 	{
 		JSONObject playerJson = new JSONObject();
+        
 		playerJson.Add ("Name", Name);
 		playerJson.Add ("level", level);
-		playerJson.Add ("protein", protein);
+        playerJson.Add ("maxHp", maxHp);
+        playerJson.Add ("protein", protein);
 		playerJson.Add ("shieldpr", shieldpr);
 		playerJson.Add ("magnetpr", magnetpr);
 		playerJson.Add ("pusherpr", pusherpr);
@@ -51,13 +54,15 @@ public class SaveSc : MonoBehaviour {
 
 	}
 
-	void Load ()
+	public void Load ()
 	{
 		string path = Application.persistentDataPath + "/PlayerSave.json";
 		string jsonString = File.ReadAllText(path);
 		JSONObject playerJson = (JSONObject)JSON.Parse(jsonString);
 
-		Name = playerJson ["Name"];
+
+        maxHp = playerJson["maxHp"];
+        Name = playerJson ["Name"];
 		level = playerJson ["level"];
 		protein = playerJson ["protein"];
 		shieldpr = playerJson ["shieldpr"];
