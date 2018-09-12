@@ -27,7 +27,7 @@ public class Squeeze : MonoBehaviour {
         issqueezeactive = false;
         squeezeButton.interactable = false;
 
-        if (savesc.squezepr == 0)
+        if (savesc.squeezepr == 0)
         {
             squeezeButton.enabled = false;
             squeezeButton.gameObject.SetActive(false);

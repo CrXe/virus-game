@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections;
 
 public class levelGm : MonoBehaviour
 {
@@ -19,9 +20,19 @@ public class levelGm : MonoBehaviour
 
      void Awake()
     {
+        Application.targetFrameRate = 60;
+        
+        
         ingamebuttons.SetActive(true);
         endgamebuttons.SetActive(false);
     }
+
+    public void TekrarOyna ()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        saveSc.Save();
+    }
+
 
 
     public void Update()
@@ -38,12 +49,7 @@ public class levelGm : MonoBehaviour
     }
 
 
-    public void TekrarOyna ()
-    {
-        int activescene = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(activescene, LoadSceneMode.Single);
-        saveSc.Save();
-    }
+   
 
  
 

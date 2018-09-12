@@ -13,17 +13,47 @@ public class SaveSc : MonoBehaviour {
 	public int shieldpr;
 	public int magnetpr;
 	public int pusherpr;
-	public int squezepr;
-	public int movelvl1pr;
-	public int movelvl2pr;
+	public int dmgredux;
+	public int squeezepr;
+	public int dash;
 	public int noenemypr;
 	public int takeallpr;
     public int maxHp;
 
 	void Awake ()
 	{
-		
-		Load ();
+
+        if (File.Exists(Application.persistentDataPath + "/PlayerSave.json") == false)
+        {
+            JSONObject playerJson = new JSONObject();
+
+            playerJson.Add("Name", Name);
+            playerJson.Add("level", level);
+            playerJson.Add("maxHp", 100);
+            playerJson.Add("protein", 10);
+            playerJson.Add("shieldpr", shieldpr);
+            playerJson.Add("magnetpr", magnetpr);
+            playerJson.Add("pusherpr", pusherpr);
+            playerJson.Add("dmgredux", dmgredux);
+            playerJson.Add("squeeze", squeezepr);
+            playerJson.Add("dash", dash);
+            playerJson.Add("noenemypr", noenemypr);
+            playerJson.Add("takeallpr", takeallpr);
+
+            string path = Application.persistentDataPath + "/PlayerSave.json";
+            File.WriteAllText(path, playerJson.ToString());
+            Load();
+
+          
+        }
+        else
+        {
+            Load();
+        }
+
+
+
+            
 	}
 
 
@@ -40,9 +70,9 @@ public class SaveSc : MonoBehaviour {
 		playerJson.Add ("shieldpr", shieldpr);
 		playerJson.Add ("magnetpr", magnetpr);
 		playerJson.Add ("pusherpr", pusherpr);
-		playerJson.Add ("squezepr", squezepr);
-		playerJson.Add ("movelvl1pr", movelvl1pr);
-		playerJson.Add ("movelvl2pr", movelvl2pr);
+		playerJson.Add ("dmgredux", dmgredux);
+		playerJson.Add ("squeeze", squeezepr);
+		playerJson.Add ("dash", dash);
 		playerJson.Add ("noenemypr", noenemypr);
 		playerJson.Add ("takeallpr", takeallpr);
 
@@ -51,8 +81,8 @@ public class SaveSc : MonoBehaviour {
 
 		string path = Application.persistentDataPath + "/PlayerSave.json";
 		File.WriteAllText(path, playerJson.ToString());
-
-	}
+    
+    }
 
 	public void Load ()
 	{
@@ -68,9 +98,9 @@ public class SaveSc : MonoBehaviour {
 		shieldpr = playerJson ["shieldpr"];
 		magnetpr = playerJson ["magnetpr"];
 		pusherpr = playerJson ["pusherpr"];
-		squezepr = playerJson ["squezepr"];
-		movelvl1pr = playerJson ["movelvl1pr"];
-		movelvl2pr = playerJson ["movelvl2pr"];
+		dmgredux = playerJson ["dmgredux"];
+        squeezepr = playerJson ["squeeze"];
+		dash = playerJson ["dash"];
 		noenemypr = playerJson ["noenemypr"];
 		takeallpr = playerJson ["takeallpr"];
 	}

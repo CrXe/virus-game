@@ -157,7 +157,7 @@ public class MutationCordinator : MonoBehaviour {
 			savesc.protein += 14;
 			break;
 		}
-		switch (savesc.squezepr) {
+		switch (savesc.dmgredux) {
 		case 1:
 			dmgRedux0.isOn = true;
 			savesc.protein += 2;
@@ -255,12 +255,12 @@ public class MutationCordinator : MonoBehaviour {
 			break;
 		}
 
-		if (savesc.movelvl1pr == 1) {
+		if (savesc.dmgredux == 1) {
 			movelevel1toggle.isOn = true;
 			savesc.protein += 7;
 		}
 
-		if (savesc.movelvl2pr == 1) {
+		if (savesc.dash == 1) {
 			movelevel2toggle.isOn = true;
 			savesc.protein += 14;
 		}
@@ -323,22 +323,22 @@ public class MutationCordinator : MonoBehaviour {
 		}
 
 	  // Squeze Toggle Control
-		if (savesc.protein >=2 && savesc.squezepr >=0 && savesc.shieldpr >= 2 ){
+		if (savesc.protein >=2 && savesc.dmgredux >=0 && savesc.shieldpr >= 2 ){
 			dmgRedux0.interactable = true;
 		} else {
 			dmgRedux0.interactable = false;
 		}
-		if (savesc.protein >=3 && savesc.squezepr >=1 && savesc.shieldpr >= 2 && dmgRedux0.isOn==true){
+		if (savesc.protein >=3 && savesc.dmgredux >=1 && savesc.shieldpr >= 2 && dmgRedux0.isOn==true){
 			dmgRedux1.interactable = true;
 		} else {
 			dmgRedux1.interactable = false;
 		}
-		if (savesc.protein >=4 && savesc.squezepr >=2 && savesc.shieldpr >= 2 && dmgRedux0.isOn==true && dmgRedux1.isOn==true){
+		if (savesc.protein >=4 && savesc.dmgredux >=2 && savesc.shieldpr >= 2 && dmgRedux0.isOn==true && dmgRedux1.isOn==true){
 			dmgRedux2.interactable = true;
 		} else {
 			dmgRedux2.interactable = false;
 		}
-		if (savesc.protein >=5 && savesc.squezepr >=3 && savesc.shieldpr >= 2 && dmgRedux0.isOn==true && dmgRedux1.isOn==true && dmgRedux2.isOn==true){
+		if (savesc.protein >=5 && savesc.dmgredux >=3 && savesc.shieldpr >= 2 && dmgRedux0.isOn==true && dmgRedux1.isOn==true && dmgRedux2.isOn==true){
 			dmgRedux3.interactable = true;
 		} else {
 			dmgRedux3.interactable = false;
@@ -416,7 +416,7 @@ public class MutationCordinator : MonoBehaviour {
 
 		//MOVE LEVEL1 TOGGLE CONTROL 
 
-		if (savesc.protein >= 7 && savesc.movelvl1pr == 0 && savesc.squezepr == 4 ) {
+		if (savesc.protein >= 7 && savesc.dmgredux == 0 && savesc.dmgredux == 4 ) {
 			movelevel1toggle.interactable = true;
 		} else {
 			movelevel1toggle.interactable = false;
@@ -425,7 +425,7 @@ public class MutationCordinator : MonoBehaviour {
 
 		//Move level2 toggle control
 
-		if (savesc.protein >= 14 && savesc.movelvl2pr == 0 && savesc.pusherpr ==4 && savesc.movelvl1pr==1 && savesc.takeallpr == 4) {
+		if (savesc.protein >= 14 && savesc.dash == 0 && savesc.pusherpr ==4 && savesc.dmgredux==1 && savesc.takeallpr == 4) {
 			movelevel2toggle.interactable = true;
 		} else {
 			movelevel2toggle.interactable = false;
@@ -536,25 +536,25 @@ public class MutationCordinator : MonoBehaviour {
 	//Squeze Toggle Control
 	public void Squezetogglecontrol0(){
 		savesc.protein -= 2;
-		savesc.squezepr = 1;
+		savesc.dmgredux = 1;
 		dmgRedux0.enabled = false;
 		Fakeupdate ();
 	}
 	public void Squezetogglecontrol1(){
 		savesc.protein -= 3;
-		savesc.squezepr = 2;
+		savesc.dmgredux = 2;
 		dmgRedux1.enabled = false;
 		Fakeupdate ();
 	}
 	public void Squezetogglecontrol2(){
 		savesc.protein -= 4;
-		savesc.squezepr = 3;
+		savesc.dmgredux = 3;
 		dmgRedux2.enabled = false;
 		Fakeupdate ();
 	}
 	public void Squezetogglecontrol3(){
 		savesc.protein -= 5;
-		savesc.squezepr = 4;
+		savesc.dmgredux = 4;
 		dmgRedux3.enabled = false;
 		Fakeupdate ();
 	}
@@ -649,7 +649,7 @@ public class MutationCordinator : MonoBehaviour {
 	public void MoveLevel1togglecontrol()
 	{
 		savesc.protein -=  7; 
-		savesc.movelvl1pr = 1;
+		savesc.dmgredux = 1;
 		movelevel1toggle.enabled = false;
 		Fakeupdate ();
 	}
@@ -658,7 +658,7 @@ public class MutationCordinator : MonoBehaviour {
 	public void MoveLevel2togglecontrol()
 	{
 		savesc.protein -=  14; 
-		savesc.movelvl2pr = 1;
+		savesc.dash = 1;
 		movelevel2toggle.enabled = false;
 		Fakeupdate ();
 	}

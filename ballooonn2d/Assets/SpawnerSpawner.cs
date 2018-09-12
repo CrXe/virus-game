@@ -7,158 +7,216 @@ public class SpawnerSpawner : MonoBehaviour {
 
     public GameObject immuneSpawnerSpawner;
     public GameObject proteinSpawnerSpawner;
-    public Vector3[] immunePositions;
+    public GameObject engelSpawnerSpawner; 
+    public Vector3[] anchorpositions;
+  
     public Vector3 hedefpozisyon;
     public Vector3 kullanılanPozisyon;
+
+    public int[] proteinYanYana;//bunun uzunluğu yan yana spawn olan proteinlerin max sayısını belirliyor 
      
 
     public float yatayAralık =10;
     public float dikeyAralık= 10;
+    
 
 
 
 
 
-
-     void Awake()
-    {
-
-        immunePositions[0] = new Vector3(0,-5, 0);
-        for (int x = 2; x < immunePositions.Length; x++)
+     void Awake(){
+        anchorpositions[0] = new Vector3(0,-5, 0);
+        for (int x = 1; x < anchorpositions.Length; x++)
         {
-            int caseSwitch = Random.Range(1, 3);
-
-            
-
+            bool engelTeklimi = false;
+            yatayAralık -= 0.05f;
+            //immune Spawner
+            int caseSwitch = Random.Range(0, 2);
             switch (caseSwitch)
             {
-                //ikili spawn
-                case 1:
-                    immunePositions[x].x += yatayAralık * x;
-
+                //ikili immune spawn
+                case 0:
+                    anchorpositions[x].x += yatayAralık * x;
                     int randomYükseklik = Random.Range(-2, 3);
-
-                    immunePositions[x].y = -12 + randomYükseklik;
+                    anchorpositions[x].y = -12 + randomYükseklik;
                     //alt gel spawner
-                    Instantiate(immuneSpawnerSpawner, immunePositions[x], Quaternion.identity);
+                    Instantiate(immuneSpawnerSpawner, anchorpositions[x], Quaternion.identity);
                     //üst el spawner
                     Instantiate(immuneSpawnerSpawner, new Vector3
-                    (immunePositions[x].x, immunePositions[x].y + dikeyAralık, immunePositions[x].z), Quaternion.identity);
-
+                    (anchorpositions[x].x, anchorpositions[x].y + dikeyAralık, anchorpositions[x].z), Quaternion.identity);
+                    engelTeklimi = false;
                     break;
 
-                //tekli spawn
-                case 2:
-                    immunePositions[x].x += yatayAralık * x;
-
-                    int randomYükseklik2 = Random.Range(-2, 4);
-                    immunePositions[x].y = -7+ randomYükseklik2;
-
-
-                    Instantiate(immuneSpawnerSpawner, new Vector3
-                    (immunePositions[x].x, immunePositions[x].y, immunePositions[x].z), Quaternion.identity);
-                    break;
-            }
-
-
-            
-
-
-
-            int randomProtein = Random.Range(1, 3);
-            switch(randomProtein)
-            {
-
-                //iki engelin tam ortasına protein spawn kodu;
+                //tekli immune spawn
                 case 1:
-                 float ikiEngelOrtasıx = (immunePositions[x - 1].x + immunePositions[x].x) / 2;
-                 float ikiEngelOrtasıy = (immunePositions[x - 1].y + immunePositions[x].y) / 2;
-
-                    int ikiEngelArasıRndy = Random.Range(-4,4);//y ekseninde kullanmak için random y+- degerı yaratıyorum
-                    if (ikiEngelOrtasıy< -10) { ikiEngelArasıRndy = Random.Range(0, 4); }//yere çarpmasın diye random değeri sınırlıyorum
-                    Instantiate(proteinSpawnerSpawner, new Vector3(ikiEngelOrtasıx, ikiEngelOrtasıy+ ikiEngelArasıRndy, 0), Quaternion.identity);
-
+                    anchorpositions[x].x += yatayAralık * x;
+                    int randomYükseklik2 = Random.Range(-2, 4);
+                    anchorpositions[x].y = -7 + randomYükseklik2;
+                    Instantiate(immuneSpawnerSpawner, new Vector3
+                    (anchorpositions[x].x, anchorpositions[x].y, anchorpositions[x].z), Quaternion.identity);
+                    engelTeklimi = true;
                     break;
-                //alttaki engelin üstüne protein spawn kodu;
+            }
+            //alttaki engelin üstüne protein spawner
+            int yboşluk = Random.Range(4, 7);
+            float proteinlerArasıBoşluk;
+            bool boslukSwitch = false;
+            for (int y = 0; y < proteinYanYana.Length; y++) {
+                //bunun sayesinde proteinleri tek noktanın sağına ve soluna dağıtabiliyorum
+                if (!boslukSwitch)
+                {
+                    proteinlerArasıBoşluk = -y / 2;
+                    boslukSwitch = true;
+                } else {
+                    proteinlerArasıBoşluk = y / 2;
+                    boslukSwitch = false;
+                }
+                float randomSpreat = Random.Range(-2, 2);
+                if (y * 3 <= x)// bu da proteinlerin giderek artmasını sağlıyor.
+                {
+                    Instantiate(proteinSpawnerSpawner
+                    , new Vector3(anchorpositions[x].x + proteinlerArasıBoşluk, anchorpositions[x].y + yboşluk + randomSpreat, anchorpositions[x].z)
+                    , Quaternion.identity);
+                }
+            }
+
+            //alttaki engelin üstüne protein spawner
+            int xboşluk2 = Random.Range(4, 6);
+            float proteinlerArasıBoşluk2;
+            bool boslukSwitch2 = false;
+            for (int y = 0; y < proteinYanYana.Length; y++)
+            {
+                //bunun sayesinde proteinleri tek noktanın sağına ve soluna dağıtabiliyorum
+                if (!boslukSwitch2)
+                {
+                    proteinlerArasıBoşluk2 = -y / 2;
+                    boslukSwitch2 = true;
+                }
+                else
+                {
+                    proteinlerArasıBoşluk2 = y / 2;
+                    boslukSwitch2 = false;
+                }
+                float randomSpreat2 = Random.Range(-2, 2);
+                // bu da proteinlerin giderek artmasını sağlıyor.
+                if (y * 6 <= x)
+                {
+                    Instantiate(proteinSpawnerSpawner
+                    , new Vector3(anchorpositions[x].x + xboşluk2 + randomSpreat2, anchorpositions[x].y + proteinlerArasıBoşluk2, anchorpositions[x].z)
+                    , Quaternion.identity);
+                }
+            }
+
+            //üstteki engelin soluna protein spawner(engel teklilse spawn etmiyor)
+
+            if (!engelTeklimi)
+            {
+                int xboşluk3 = Random.Range(4, 7);
+                float proteinlerArasıBoşluk3;
+                bool boslukSwitch3 = false;
+                for (int y = 0; y < proteinYanYana.Length; y++)
+                {
+                    //bunun sayesinde proteinleri tek noktanın sağına ve soluna dağıtabiliyorum
+                    if (!boslukSwitch3)
+                    {
+                        proteinlerArasıBoşluk3 = -y / 2;
+                        boslukSwitch3 = true;
+                    }
+                    else
+                    {
+                        proteinlerArasıBoşluk3 = y / 2;
+                        boslukSwitch3 = false;
+                    }
+                    float randomSpreat2 = Random.Range(-2, 2);
+                    // bu da proteinlerin giderek artmasını sağlıyor.
+                    if (y * 6 <= x)
+                    {
+                        Instantiate(proteinSpawnerSpawner
+                        , new Vector3(anchorpositions[x].x - xboşluk3, anchorpositions[x].y + dikeyAralık + proteinlerArasıBoşluk3, anchorpositions[x].z)
+                        , Quaternion.identity);
+                    }
+                }
+            }
+
+
+            //immunelar arası engel spawner
+
+            // eski alt engelle yeni alt engel ortası
+            Vector3 immunelararasıAltAlt = (anchorpositions[x] + anchorpositions[x - 1]) / 2;
+
+            //eski alt engelle yeni üst engel ortası
+
+            Vector3 immunelararasıAltÜst = (anchorpositions[x - 1] + new Vector3(anchorpositions[x].x, anchorpositions[x].y+ dikeyAralık, anchorpositions[x].z) )/ 2;
+
+
+            //immunelerin ortası ya da teklinin üstü
+
+            Vector3 immunelerortası = (anchorpositions[x] + new Vector3(anchorpositions[x].x, anchorpositions[x].y + dikeyAralık, anchorpositions[x].z)) / 2;
+
+
+
+
+            switch (Mathf.RoundToInt((x / 30f) * 2f))
+
+            {
+                case 0:
+                    float randomcase1 = Random.Range(-2, 2);
+                    Instantiate(engelSpawnerSpawner, new Vector3(immunelararasıAltÜst.x + randomcase1, immunelararasıAltÜst.y, immunelararasıAltÜst.z), Quaternion.identity);
+                    break;
+
+                case 1:
+                    float randomcase2 = Random.Range(-2, 2);
+                    float randomcase22 = Random.Range(-3, 3);
+                    Instantiate(engelSpawnerSpawner, new Vector3(immunelararasıAltAlt.x, immunelararasıAltAlt.y + randomcase2, immunelararasıAltAlt.z), Quaternion.identity);
+                    Instantiate(engelSpawnerSpawner, new Vector3(immunelararasıAltÜst.x + randomcase22, immunelararasıAltÜst.y, immunelararasıAltÜst.z), Quaternion.identity);
+                    break;
+
                 case 2:
-                     Instantiate(proteinSpawnerSpawner, new Vector3(immunePositions[x].x, immunePositions[x].y+5, 0), Quaternion.identity);
+                    int case2random = Random.Range(0, 2);
+                    switch (case2random)
+                    {
+                        case 1:
+                            float randomcase3 = Random.Range(-2, 2);
+                            float randomcase32 = Random.Range(-3, 3);
+                            float rancomcase33 = Random.Range(-2, 2);
+                            Instantiate(engelSpawnerSpawner, new Vector3(immunelararasıAltAlt.x, immunelararasıAltAlt.y + randomcase3, immunelararasıAltAlt.z), Quaternion.identity);
+                            Instantiate(engelSpawnerSpawner, new Vector3(immunelararasıAltÜst.x + randomcase32, immunelararasıAltÜst.y, immunelararasıAltÜst.z), Quaternion.identity);
+                            Instantiate(engelSpawnerSpawner, new Vector3(immunelerortası.x, immunelerortası.y + rancomcase33, immunelerortası.z), Quaternion.identity);
+                            break;
+
+                        case 2:
+
+                             float randomcase33 = Random.Range(-2, 2);
+                            float randomcase323 = Random.Range(-3, 3);
+                    ;
+                            Instantiate(engelSpawnerSpawner, new Vector3(immunelararasıAltAlt.x, immunelararasıAltAlt.y + randomcase33, immunelararasıAltAlt.z), Quaternion.identity);
+                            Instantiate(engelSpawnerSpawner, new Vector3(immunelararasıAltÜst.x + randomcase323, immunelararasıAltÜst.y, immunelararasıAltÜst.z), Quaternion.identity);
+                      
+                            break;
+
+                            ;
+                    }
+
+
                     break;
 
-
+           
             }
 
 
 
-            
-   
+
+
+
+
+
         }
 
     }
 
 
-    /*
-     * Level Generetar Deneme1
-     * 
-    
-   //Level Generator
-   void Awake () {
-        hedefpozisyon = new Vector3(10, -11, 0); 
-
-
-       for (int x = 0; x < immunePositions.Length; x++) {
-
-           kullanılanPozisyon = hedefpozisyon;
-           int randx = Random.Range(-2, 4);
-           int randy = Random.Range(-2, 4);
-
-
-
-           // random faktörleri /engellerin pozisyonları random ama ikisi bağlı
-           kullanılanPozisyon.y = kullanılanPozisyon.y + randy;
-           kullanılanPozisyon.x = kullanılanPozisyon.x + randx;
-
-           //zemıne carpmaması ıcın mınımum yukseklık
-           if (kullanılanPozisyon.y < -13)
-           {
-               kullanılanPozisyon.y = -13;
-           }
-
-           //tavana carpmaması ıcın maksımum yukseklık
-           if (kullanılanPozisyon.y+ dikeyAralık > 2)
-           {
-               kullanılanPozisyon.y =2-dikeyAralık;
-           }
-
-
-           if (immunePositions[x].x - immunePositions[x-1]<5)
-           { 
-                   }
-
-
-            //alttaki engel
-           Instantiate(spawnerspawner, kullanılanPozisyon, Quaternion.identity);
-           //üstteki engel
-           Instantiate(spawnerspawner, new Vector3
-           (kullanılanPozisyon.x, kullanılanPozisyon.y+ dikeyAralık, kullanılanPozisyon.z), Quaternion.identity);
-
-
-
-           hedefpozisyon += new Vector3(yatayAralık, 0,0);
-
-
-
-
-       }
-
-
-
-   }
-
-   *///level generator deneme1
-
-
-    // Update is called once per frame
     void Update () {
-		
-	}
+        
+
+    }
 }

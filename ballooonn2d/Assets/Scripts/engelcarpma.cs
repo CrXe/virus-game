@@ -9,139 +9,85 @@ public class engelcarpma : MonoBehaviour {
 	public bool yokol =false;
 	public GameObject player;
 	public GameObject sprites;
-	public Animator animengelplus;
-   
+    public bool yokolwithshield;
+    public EdgeCollider2D overlapCollider;
+    public Rigidbody2D rbengel;
+    public bool ispusherused;
+    public carpma carpmasc;
 
 
-
-
-
-	private float engeluzunlukx;
-	private float engelgenişliky;
-	[Range(0,20)]
-	public float engeltütle;
-
-	public PlayerShield playershield;
-	public bool yokolwithshield;
-	public bool uzaklaş;
-	public Vector3 uzaklaşmamiktarı;
+    public float engelDmg;
 	public ParticleSystem particleEnemy;
 
-    public SpawnerSpawner spawnerspawnersc;
 
 	void Start() {
-		yokolwithshield = false;
-        
-
-
-
-        player = GameObject.FindWithTag("Player");
-
-	}
-
-	void Update () {
-
-       
-        uzaklaşmamiktarı = trengel.transform.position - player.transform.position;
-
-		if (trengel.lossyScale.x <= 0 ) {
-			tamamenyokol ();
-		}
-
-		if (yokol == true && trengel.lossyScale.x >0 ) {
-			trengel.transform.localScale -= new Vector3 (1,1,1)*Time.deltaTime;
-			trengel.transform.position = Vector2.Lerp (trengel.transform.position, player.transform.position, Time.deltaTime*3f);
-		}
-
-		if (yokolwithshield == true) {
-			trengel.transform.localScale -= new Vector3 (1,1,1)*Time.deltaTime;
-		}
-
-
-		if (uzaklaş == true) {
-			trengel.transform.position = Vector3.Lerp (trengel.transform.position, uzaklaşmamiktarı + trengel.transform.position, Time.deltaTime * 0.2f);
-			
-		}
-
-
+        engelDmg = 5;
+        ispusherused = false;
+        player = GameObject.FindGameObjectWithTag("Player");
+        carpmasc = player.GetComponent<carpma>();
 
 	}
 
 
-	public void Destroy ()
-	{
-		Destroy (gameObject);
-	}
 
-	public void tamamenyokol ()
+	public void TamamenYokol ()
 	{
 		sprites.SetActive (false);
 		yokol = false;
-		particleEnemy.Stop ();
-		Invoke ("Destroy", 1);
-
-
-	}
-
-	void OnTriggerExit2D (Collider2D info )
-	{
-		if (info.tag == "pusher" && gameObject.tag == "engeldusman") {
-			uzaklaş = false;
-
-		}
+		
+        Destroy(gameObject, 1.5f);
 
 	}
 
-
+    public void SetVelocityZeroAgain ()
+    {
+        rbengel.velocity = new Vector2(0, 0);
+    }
 
 
     void OnTriggerEnter2D (Collider2D info )
 	{
 		if (info.tag == "Player") {
-			
-			bcengel.enabled = false;
+            overlapCollider.enabled = false;
+            bcengel.enabled = false;
 			yokol = true;
-			}
-		if (info.tag == "shield"  && gameObject.tag =="engeldusman") {
-			engeltütle = 0;
+            carpmasc.hedefVirusHp -= engelDmg;
+            TamamenYokol();
+            
+
+        }
+
+		if (info.tag == "shield") {
+            overlapCollider.enabled = false;
+            engelDmg = 0;
 			bcengel.enabled = false;
-			yokolwithshield = true;
 			particleEnemy.Play ();
+            TamamenYokol();
+        }
 
-			}
-		if (info.tag == "shield" && gameObject.tag == "engel") {
-			engeltütle = 0;
-			}
+		if (info.tag == "pusher" ) {
 
-		if (info.tag == "noenemy" && gameObject.tag == "engel") {
-			engeltütle = 0;
-			}
+            while (!ispusherused)
+            {
+                Vector3 relativeforce = transform.position - player.transform.position;
+                rbengel.velocity = new Vector2(relativeforce.x / 2, relativeforce.y / 2);
+                
+                ispusherused = true;
+                Invoke("SetVelocityZeroAgain", 1);
+            }
+        }
 
-		if (info.tag == "magnet" && gameObject.tag == "engel") {
-			
+        if (info.tag == "noenemy"  ) {
+            overlapCollider.enabled = false;
+            engelDmg = 0;
 			bcengel.enabled = false;
-			yokol = true;
-		}
-
-			if (info.tag == "pusher" && gameObject.tag == "engeldusman") {
-				uzaklaş = true;
-		}
-			if (info.tag == "noenemy"  && gameObject.tag =="engeldusman") {
-			engeltütle = 0;
-			bcengel.enabled = false;
-			yokolwithshield = true;
 			particleEnemy.Play ();
+            TamamenYokol();
 
-			}
+        }
 
+       
 
-		if (info.tag == "takeall" && gameObject.tag == "engel") {
-			
-			bcengel.enabled = false;
-			yokol = true;
-		}
-
-      
 
     }
 

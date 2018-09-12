@@ -7,14 +7,34 @@ public class overlapsolver : MonoBehaviour {
 	
 
 
-        public GameObject engelplusga;
+    public GameObject engelplusga;
+    public ParticleSystem pusherDestroyParticle;
+    public SpriteRenderer engelsprite;
+    public EdgeCollider2D mainCollider;
 	
 
-     void OnTriggerStay2D(Collider2D info)
+     void OnTriggerEnter2D(Collider2D info)
     {
-        if (info.tag == "immunesystem" && gameObject.tag == "overlapsolver")
+        
+
+        //immune systemle carpısınca yok ediyor objeyi + ve - enemy icin de gecerli
+        if (info.tag == "immunesystem")
         {
-        GameObject.Destroy(engelplusga, 0);
+            mainCollider.enabled = false;
+            engelsprite.enabled = false;
+            pusherDestroyParticle.Play();
+
+            GameObject.Destroy(engelplusga, 1);
+            
+        }
+
+        if (info.tag == "tavanzemin")
+        {
+            mainCollider.enabled = false;
+            engelsprite.enabled = false;
+            pusherDestroyParticle.Play();
+
+            GameObject.Destroy(engelplusga, 1);
 
         }
 

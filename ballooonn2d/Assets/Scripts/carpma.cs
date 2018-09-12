@@ -101,23 +101,7 @@ public class carpma : MonoBehaviour {
 
 
 
-	void OnTriggerEnter2D (Collider2D info){
-        if (info.tag == "engel")
-        {
 
-            engelcarpma eklenecekkütle = info.gameObject.GetComponent<engelcarpma>();
-            savesc.protein += eklenecekkütle.engeltütle;
-        }
-
-
-        if (info.tag == "engeldusman" ) {
-
-			engelcarpma eklenecekkütle = info.gameObject.GetComponent<engelcarpma> ();
-			hedefVirusHp -= eklenecekkütle.engeltütle;
-
-		}
-		
-	}
 
 	void OnCollisionExit2D (Collision2D info){
 

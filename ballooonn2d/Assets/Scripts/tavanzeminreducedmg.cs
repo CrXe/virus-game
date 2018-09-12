@@ -20,20 +20,20 @@ public class tavanzeminreducedmg : MonoBehaviour {
 	void Start ()
 	{
 
-		if (savesc.squezepr == 0) {
+		if (savesc.dmgredux == 0) {
 			carpma.tavanzemindmg = 1;
 		}
 
-		if (savesc.squezepr == 1) {
+		if (savesc.dmgredux == 1) {
 			carpma.tavanzemindmg = 1*dmgReduxlevel1;
 		}
-		if (savesc.squezepr == 2) {
+		if (savesc.dmgredux == 2) {
 			carpma.tavanzemindmg = 1*dmgReduxlevel2;
 		}
-		if (savesc.squezepr == 3) {
+		if (savesc.dmgredux == 3) {
 			carpma.tavanzemindmg = 1*dmgReduxlevel3;
 		}
-		if (savesc.squezepr == 4) {
+		if (savesc.dmgredux == 4) {
 			carpma.tavanzemindmg = 1*dmgReduxlevel4;
 		}
 
